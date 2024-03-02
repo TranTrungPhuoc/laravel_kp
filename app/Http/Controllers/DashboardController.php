@@ -11,7 +11,10 @@ class DashboardController extends Controller
         $ss = $request->session()->get('loginSession');
 
         if(isset($ss)){
-            return view('admin.index');
+            $main = 'admin.includes.main';
+            return view('admin.index', [
+                'main' => $main
+            ]);
         }
         else{
             return view('admin.error403');

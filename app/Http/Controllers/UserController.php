@@ -7,6 +7,48 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    function index(Request $request) {
+        $ss = $request->session()->get('loginSession');
+
+        if(isset($ss)){
+            $main = 'admin.user.main';
+            return view('admin.index', [
+                'main' => $main
+            ]);
+        }
+        else{
+            return view('admin.error403');
+        }
+    }
+
+    function add(Request $request) {
+        $ss = $request->session()->get('loginSession');
+
+        if(isset($ss)){
+            $main = 'admin.user.form';
+            return view('admin.index', [
+                'main' => $main
+            ]);
+        }
+        else{
+            return view('admin.error403');
+        }
+    }
+
+    function edit(Request $request) {
+        $ss = $request->session()->get('loginSession');
+
+        if(isset($ss)){
+            $main = 'admin.user.form';
+            return view('admin.index', [
+                'main' => $main
+            ]);
+        }
+        else{
+            return view('admin.error403');
+        }
+    }
+
     function login(){
         return view('admin.login');
     }
@@ -22,7 +64,7 @@ class UserController extends Controller
             return redirect('/admin/dashboard');
         }
         else{
-            echo 'Đăng nhập thất bại!';
+            return redirect('/login');
         }
     }
 
