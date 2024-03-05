@@ -35,7 +35,9 @@ Route::get('/admin/post/del', [PostController::class, 'del']);
 Route::get('/admin/user', [UserController::class, 'index']);
 Route::get('/admin/user/add', [UserController::class, 'add']);
 Route::get('/admin/user/edit', [UserController::class, 'edit']);
-Route::get('/admin/user/del', [UserController::class, 'del']);
+
+Route::post('/admin/user/register', [UserController::class, 'register']);
+Route::post('/admin/user/delete', [UserController::class, 'delete']);
 
 Route::get('/login', [UserController::class, 'login']);
 Route::get('/logout', [UserController::class, 'logout']);

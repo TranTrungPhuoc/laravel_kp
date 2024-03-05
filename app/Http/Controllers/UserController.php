@@ -3,7 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\View\View;
+
+use App\Models\User;
+
+use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
@@ -11,9 +16,17 @@ class UserController extends Controller
         $ss = $request->session()->get('loginSession');
 
         if(isset($ss)){
+
+            // lấy dữ liệu từ db
+            $users = DB::table('users')
+            ->select()
+            ->orderBy('id', 'desc')
+            ->get();
+
             $main = 'admin.user.main';
             return view('admin.index', [
-                'main' => $main
+                'main' => $main,
+                'users' => $users
             ]);
         }
         else{
@@ -28,6 +41,50 @@ class UserController extends Controller
             $main = 'admin.user.form';
             return view('admin.index', [
                 'main' => $main
+            ]);
+        }
+        else{
+            return view('admin.error403');
+        }
+    }
+
+    function register(Request $request) {
+        $ss = $request->session()->get('loginSession');
+
+        if(isset($ss)){
+
+            $name = $request->input('name');
+            $email = $request->input('email');
+            $password = $request->input('password');
+
+            $user = new User;
+ 
+            $user->name = $name;
+            $user->email = $email;
+            $user->password = $password;
+    
+            $user->save();
+
+            return response()->json([
+                'msg' => 'ok'
+            ]);
+        }
+        else{
+            return view('admin.error403');
+        }
+    }
+
+    function delete(Request $request) {
+        $ss = $request->session()->get('loginSession');
+
+        if(isset($ss)){
+
+            $id = $request->input('idDel');
+
+            $deleted = DB::table('users')->where('id', $id)->delete();
+
+            return response()->json([
+                'msg' => $deleted,
             ]);
         }
         else{
