@@ -3,80 +3,51 @@
       <div class="col-md-12">
          <div class="card">
             <div class="card">
-               <div class="card-body">
-                  <h4 class="card-title">Forms Control</h4>
-                  <div class="form-group">
-                     <label for="hue-demo">Hue</label>
-                     <input
-                        type="text"
-                        id="hue-demo"
-                        class="form-control demo"
-                        data-control="hue"
-                        value="#ff6161"
-                        />
-                  </div>
-                  <div class="form-group">
-                     <label for="position-bottom-left"
-                        >Bottom left (default)</label
-                        >
-                     <input
-                        type="text"
-                        id="position-bottom-left"
-                        class="form-control demo"
-                        data-position="bottom left"
-                        value="#0088cc"
-                        />
-                  </div>
-                  <div class="form-group">
-                     <label for="position-top-right">Top right</label>
-                     <input
-                        type="text"
-                        id="position-top-right"
-                        class="form-control demo"
-                        data-position="top right"
-                        value="#0088cc"
-                        />
-                  </div>
-                  <label>Datepicker</label>
-                  <div class="input-group">
-                     <input
-                        type="text"
-                        class="form-control mydatepicker"
-                        placeholder="mm/dd/yyyy"
-                        />
-                     <div class="input-group-append">
-                        <span class="input-group-text h-100"
-                           ><i class="mdi mdi-calendar"></i
-                           ></span>
-                     </div>
-                  </div>
-                  <label class="mt-3">Autoclose Datepicker</label>
-                  <div class="input-group">
-                     <input
-                        type="text"
-                        class="form-control"
-                        id="datepicker-autoclose"
-                        placeholder="mm/dd/yyyy"
-                        />
-                     <div class="input-group-append">
-                        <span class="input-group-text h-100"
-                           ><i class="mdi mdi-calendar"></i
-                           ></span>
-                     </div>
-                  </div>
-               </div>
-               <div class="border-top">
+               <form id="FormData">
+                  @csrf
                   <div class="card-body">
-                     <button type="submit" class="btn btn-success text-white">
-                     Save
-                     </button>
-                     <button type="submit" class="btn btn-primary">Reset</button>
-                     <button type="submit" class="btn btn-info">Edit</button>
-                     <button type="submit" class="btn btn-danger text-white">
-                     Cancel
-                     </button>
+                     <input type="hidden" id="id" name="id" value="{{ isset($row) ? $row->id : ''; }}"/>
+                     <div class="form-group">
+                        <label for="name">Tên</label>
+                        <input
+                           type="text"
+                           id="name"
+                           name="name"
+                           value="{{ isset($row) ? $row->name : ''; }}"
+                           class="form-control"
+                           onchange="ChangeToSlug()"
+                           onkeyup="ChangeToSlug()"
+                           />
+                     </div>
+                     <div class="form-group">
+                        <label for="slug">Slug</label>
+                        <input
+                           type="text"
+                           id="slug"
+                           name="slug"
+                           value="{{ isset($row) ? $row->slug : ''; }}"
+                           class="form-control"/>
+                     </div>
+                     <div class="form-group">
+                        <label for="description">Mô Tả</label>
+                        <textarea name="description" class="form-control" id="description" cols="30" rows="3">{{ isset($row) ? $row->description : ''; }}</textarea>
+                     </div>
+                     <div class="form-group">
+                        <label for="content">Nội Dung</label>
+                        <textarea name="content" class="form-control" id="content" cols="30" rows="3">{{ isset($row) ? $row->content : ''; }}</textarea>
+                     </div>
                   </div>
-               </div>
+                  <div class="border-top">
+                     <div class="card-body">
+                        <button type="submit" class="btn btn-success text-white">
+                        Lưu Lại
+                        </button>
+                        <a href="/admin/{{ $nameModule }}" class="btn btn-danger text-white">
+                        Thoát
+                        </a>
+                     </div>
+                  </div>
+               </form>
             </div>
          </div>
       </div>

@@ -12,13 +12,15 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+    private $nameTable = 'users';
+
     function index(Request $request) {
         $ss = $request->session()->get('loginSession');
 
         if(isset($ss)){
 
             // lấy dữ liệu từ db
-            $users = DB::table('users')
+            $tables = DB::table($this->nameTable)
             ->select()
             ->orderBy('id', 'desc')
             ->get();
@@ -26,7 +28,9 @@ class UserController extends Controller
             $main = 'admin.user.main';
             return view('admin.index', [
                 'main' => $main,
-                'users' => $users
+                'tables' => $tables,
+                'nameModule' => $request->segment(2),
+                'nameVi' => $this->changeNameModule($request->segment(2))
             ]);
         }
         else{
@@ -40,7 +44,9 @@ class UserController extends Controller
         if(isset($ss)){
             $main = 'admin.user.form';
             return view('admin.index', [
-                'main' => $main
+                'main' => $main,
+                'nameModule' => $request->segment(2),
+                'nameVi' => $this->changeNameModule($request->segment(2))
             ]);
         }
         else{
@@ -48,26 +54,58 @@ class UserController extends Controller
         }
     }
 
-    function register(Request $request) {
+    function process(Request $request) {
         $ss = $request->session()->get('loginSession');
 
         if(isset($ss)){
-
-            $name = $request->input('name');
+            $id = $request->input('id');
             $email = $request->input('email');
-            $password = $request->input('password');
 
-            $user = new User;
+            // check email có tồn tại trong db hay
+            $rowEmail = DB::table($this->nameTable)->where('email', $email)->get();
+
+            if(count($rowEmail)!=0){
+                return response()->json([
+                    'msg' => 'nok',
+                    'error' => 'Email đã tồn tại',
+                    'id' => $id
+                ]);
+            }
+
+            if($id == ''){
+                // add
+                $name = $request->input('name');
+                $password = $request->input('password');
+
+                $module = new User;
  
-            $user->name = $name;
-            $user->email = $email;
-            $user->password = $password;
-    
-            $user->save();
+                $module->name = $name;
+                $module->email = $email;
+                $module->password = $password;
+        
+                $module->save();
 
-            return response()->json([
-                'msg' => 'ok'
-            ]);
+                return response()->json([
+                    'msg' => 'ok',
+                    'error' => '',
+                    'id' => $id
+                ]);
+            }
+            else{
+                // edit
+                $name = $request->input('name');
+                $email = $request->input('email');
+
+                DB::table($this->nameTable)
+                ->where('id', $id)
+                ->update(['name' => $name, 'email' => $email]);
+
+                return response()->json([
+                    'msg' => 'ok',
+                    'error' => '',
+                    'id' => $id
+                ]);
+            }
         }
         else{
             return view('admin.error403');
@@ -81,7 +119,7 @@ class UserController extends Controller
 
             $id = $request->input('idDel');
 
-            $deleted = DB::table('users')->where('id', $id)->delete();
+            $deleted = DB::table($this->nameTable)->where('id', $id)->delete();
 
             return response()->json([
                 'msg' => $deleted,
@@ -92,13 +130,24 @@ class UserController extends Controller
         }
     }
 
-    function edit(Request $request) {
+    function edit(Request $request, string $id) {
         $ss = $request->session()->get('loginSession');
 
         if(isset($ss)){
+
+            // lấy dữ liệu từ db
+            $row = DB::table($this->nameTable)
+            ->select()
+            ->where('id', $id)
+            ->orderBy('id', 'desc')
+            ->get();
+
             $main = 'admin.user.form';
             return view('admin.index', [
-                'main' => $main
+                'main' => $main,
+                'row' => $row[0], // [{}]
+                'nameModule' => $request->segment(2),
+                'nameVi' => $this->changeNameModule($request->segment(2))
             ]);
         }
         else{

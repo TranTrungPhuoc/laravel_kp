@@ -12,7 +12,8 @@ class PostController extends Controller
         if(isset($ss)){
             $main = 'admin.post.main';
             return view('admin.index', [
-                'main' => $main
+                'main' => $main,
+                'nameModule' => $this->changeNameModule($request->segment(2))
             ]);
         }
         else{
@@ -26,7 +27,8 @@ class PostController extends Controller
         if(isset($ss)){
             $main = 'admin.post.form';
             return view('admin.index', [
-                'main' => $main
+                'main' => $main,
+                'nameModule' => $this->changeNameModule($request->segment(2))
             ]);
         }
         else{
@@ -40,7 +42,8 @@ class PostController extends Controller
         if(isset($ss)){
             $main = 'admin.post.form';
             return view('admin.index', [
-                'main' => $main
+                'main' => $main,
+                'nameModule' => $this->changeNameModule($request->segment(2))
             ]);
         }
         else{

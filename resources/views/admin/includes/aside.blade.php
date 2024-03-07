@@ -27,7 +27,7 @@
         <nav class="sidebar-nav">
             <ul id="sidebarnav" class="pt-4">
                 @foreach ($asideLists as $aside)
-                    <li class="sidebar-item">
+                    <li class="sidebar-item {{ $aside['link'] == $nameModule ? 'selected':''; }}">
                         <a
                             class="sidebar-link waves-effect waves-dark sidebar-link"
                             href="/admin/{{ $aside['link'] }}"

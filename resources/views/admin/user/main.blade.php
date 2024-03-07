@@ -4,7 +4,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title mb-0">
-                        <a href="/admin/user/add" class="btn btn-outline-info">
+                        <a href="/admin/{{$nameModule}}/add" class="btn btn-outline-info">
                         <i class="mdi mdi-plus"></i>
                         Thêm Dữ Liệu
                         </a>
@@ -21,18 +21,18 @@
                     </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($tables as $table)
                         <tr>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td>{{ $table->name }}</td>
+                            <td>{{ $table->email }}</td>
                             <td>
-                                <a href="/admin/category/edit" class="btn btn-outline-info">
+                                <a href="/admin/{{$nameModule}}/edit/{{ $table->id }}" class="btn btn-outline-info">
                                 <i class="mdi mdi-pencil"></i>
                                 Sửa
                                 </a>
                                 <button type="button" 
                                     class="btn btn-outline-danger" 
-                                    onclick="getID({{ $user->id }}, '{{ $user->name }}')"
+                                    onclick="getID({{ $table->id }}, '{{ $table->name }}')"
                                     data-bs-toggle="modal" 
                                     data-bs-target="#myModal">
                                 <i class="mdi mdi-delete"></i>

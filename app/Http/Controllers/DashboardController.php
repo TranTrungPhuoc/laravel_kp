@@ -13,7 +13,8 @@ class DashboardController extends Controller
         if(isset($ss)){
             $main = 'admin.includes.main';
             return view('admin.index', [
-                'main' => $main
+                'main' => $main,
+                'nameModule' => ''
             ]);
         }
         else{

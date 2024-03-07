@@ -23,8 +23,10 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index']);
 
 Route::get('/admin/category', [CategoryController::class, 'index']);
 Route::get('/admin/category/add', [CategoryController::class, 'add']);
-Route::get('/admin/category/edit', [CategoryController::class, 'edit']);
-Route::get('/admin/category/del', [CategoryController::class, 'del']);
+Route::get('/admin/category/edit/{id}', [CategoryController::class, 'edit']);
+
+Route::post('/admin/category/process', [CategoryController::class, 'process']);
+Route::post('/admin/category/delete', [CategoryController::class, 'delete']);
 
 
 Route::get('/admin/post', [PostController::class, 'index']);
@@ -34,9 +36,9 @@ Route::get('/admin/post/del', [PostController::class, 'del']);
 
 Route::get('/admin/user', [UserController::class, 'index']);
 Route::get('/admin/user/add', [UserController::class, 'add']);
-Route::get('/admin/user/edit', [UserController::class, 'edit']);
+Route::get('/admin/user/edit/{id}', [UserController::class, 'edit']);
 
-Route::post('/admin/user/register', [UserController::class, 'register']);
+Route::post('/admin/user/process', [UserController::class, 'process']);
 Route::post('/admin/user/delete', [UserController::class, 'delete']);
 
 Route::get('/login', [UserController::class, 'login']);
