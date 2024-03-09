@@ -85,13 +85,13 @@
                       ></span>
                     </div>
                     <input
-                      type="text"
+                      type="email"
                       class="form-control form-control-lg"
-                      placeholder="Username"
-                      aria-label="Username"
+                      placeholder="Email"
+                      aria-label="Email"
                       aria-describedby="basic-addon1"
                       required=""
-                      name="username"
+                      name="email"
                     />
                   </div>
                   <div class="input-group mb-3">

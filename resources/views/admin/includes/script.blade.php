@@ -108,7 +108,7 @@
             e.preventDefault();
         
             $.ajax({
-                url: '/admin/user/delete',
+                url: '/admin/{{ $nameModule }}/delete',
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function(results){
@@ -116,7 +116,7 @@
                     if(results.msg == 1){
                         alert('Đã xóa !!!')
                         // tự động chuyển trang
-                        window.location.href = '/admin/user';
+                        window.location.href = '/admin/{{ $nameModule }}';
                     }
                 }
             });
@@ -141,7 +141,11 @@
                     return false;
                 }
             }
-            else if(nameModule == 'category'){
+            else if(
+                nameModule == 'category'
+                ||
+                nameModule == 'post'
+            ){
                 content = CKEDITOR.instances['content'].getData();
             }
 

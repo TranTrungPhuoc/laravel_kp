@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('slug');
             $table->text('description')->nullable();
             $table->text('content')->nullable();
+            $table->boolean('status')->nullable();
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
     }

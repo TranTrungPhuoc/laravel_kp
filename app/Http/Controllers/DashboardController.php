@@ -14,7 +14,8 @@ class DashboardController extends Controller
             $main = 'admin.includes.main';
             return view('admin.index', [
                 'main' => $main,
-                'nameModule' => ''
+                'nameModule' => '',
+                'ssId' => $ss['id']
             ]);
         }
         else{

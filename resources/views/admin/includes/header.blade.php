@@ -4,7 +4,7 @@
         <!-- ============================================================== -->
         <!-- Logo -->
         <!-- ============================================================== -->
-        <a class="navbar-brand" href="index.html">
+        <a class="navbar-brand" href="/" target="_blank">
             <!-- Logo icon -->
             <b class="logo-icon ps-2">
             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
@@ -109,7 +109,7 @@
                 class="dropdown-menu dropdown-menu-end user-dd animated"
                 aria-labelledby="navbarDropdown"
             >
-                <a class="dropdown-item" href="javascript:void(0)"
+                <a class="dropdown-item" href="/admin/user/edit/{{$ssId}}"
                 ><i class="mdi mdi-account me-1 ms-1"></i> Thông Tin Cá Nhân</a
                 >
                 

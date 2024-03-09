@@ -13,6 +13,8 @@ class Category extends Model
         'name',
         'slug',
         'description',
-        'content'
+        'content',
+        'status',
+        'user_id'
     ];
 }

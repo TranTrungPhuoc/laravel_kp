@@ -3,7 +3,7 @@
       <div class="col-md-12">
          <div class="card">
             <div class="card">
-               <form id="userForm">
+               <form id="FormData">
                   @csrf
                   <div class="card-body">
                      <input type="hidden" id="id" name="id" value="{{ isset($row) ? $row->id : ''; }}"/>
@@ -14,53 +14,44 @@
                            id="name"
                            name="name"
                            value="{{ isset($row) ? $row->name : ''; }}"
+                           class="form-control"
+                           onchange="ChangeToSlug()"
+                           onkeyup="ChangeToSlug()"
+                           />
+                     </div>
+                     <div class="form-group">
+                        <label for="slug">Slug</label>
+                        <input
+                           type="text"
+                           id="slug"
+                           name="slug"
+                           value="{{ isset($row) ? $row->slug : ''; }}"
                            class="form-control"/>
                      </div>
                      <div class="form-group">
-                        <label for="email"
-                           >Email</label
-                           >
-                        <input
-                           type="email"
-                           id="email"
-                           name="email"
-                           value="{{ isset($row) ? $row->email : ''; }}"
-                           class="form-control"/>
-                     </div>
-                     @empty($row)
-                     <div class="form-group">
-                        <label for="password">Mật Khẩu</label>
-                        <input
-                           type="password"
-                           id="password"
-                           name="password"
-                           class="form-control"/>
+                        <label for="category_id">Danh Mục</label>
+                        <select name="category_id" id="category_id" class="form-control">
+                           <option value="">-Chọn-</option>
+                           @foreach ($categories as $category)
+                           <option value="{{ $category->id }}" {{ isset($row) ? $category->id==$row->category_id ? 'selected' : '' : '' }}>{{ $category->name }}</option>
+                           @endforeach
+                        </select>
                      </div>
                      <div class="form-group">
-                        <label for="cfpassword">Xác Nhận Mật Khẩu</label>
-                        <input
-                           type="password"
-                           id="cfpassword"
-                           name="cfpassword"
-                           class="form-control"/>
+                        <label for="description">Mô Tả</label>
+                        <textarea name="description" class="form-control" id="description" cols="30" rows="3">{{ isset($row) ? $row->description : ''; }}</textarea>
                      </div>
-                     @endempty
+                     <div class="form-group">
+                        <label for="content">Nội Dung</label>
+                        <textarea name="content" class="form-control" id="content" cols="30" rows="3">{{ isset($row) ? $row->content : ''; }}</textarea>
+                     </div>
                   </div>
                   <div class="border-top">
                      <div class="card-body">
                         <button type="submit" class="btn btn-success text-white">
                         Lưu Lại
                         </button>
-                        @isset($row)
-                        <button 
-                        type="button" 
-                        class="btn btn-info text-white"
-                        data-bs-toggle="modal" 
-                        data-bs-target="#changePassModal">
-                        Đổi Mật Khẩu
-                        </button>
-                        @endisset
-                        <a href="/admin/user" class="btn btn-danger text-white">
+                        <a href="/admin/{{ $nameModule }}" class="btn btn-danger text-white">
                         Thoát
                         </a>
                      </div>

@@ -29,7 +29,8 @@ class CategoryController extends Controller
                 'main' => $main,
                 'tables' => $tables,
                 'nameModule' => $request->segment(2),
-                'nameVi' => $this->changeNameModule($request->segment(2))
+                'nameVi' => $this->changeNameModule($request->segment(2)),
+                'ssId' => $ss['id']
             ]);
         }
         else{
@@ -45,7 +46,8 @@ class CategoryController extends Controller
             return view('admin.index', [
                 'main' => $main,
                 'nameModule' => $request->segment(2),
-                'nameVi' => $this->changeNameModule($request->segment(2))
+                'nameVi' => $this->changeNameModule($request->segment(2)),
+                'ssId' => $ss['id']
             ]);
         }
         else{
@@ -69,7 +71,8 @@ class CategoryController extends Controller
                 'main' => $main,
                 'row' => $row[0], // [{}]
                 'nameModule' => $request->segment(2),
-                'nameVi' => $this->changeNameModule($request->segment(2))
+                'nameVi' => $this->changeNameModule($request->segment(2)),
+                'ssId' => $ss['id']
             ]);
         }
         else{
@@ -87,9 +90,9 @@ class CategoryController extends Controller
             $description = $request->input('description');
             $content = $request->input('content');
 
-            // check email có tồn tại trong db hay
+            // check name có tồn tại trong db hay
             $rowName = DB::table($this->nameTable)->where('name', $name)->get();
-
+            
             if(count($rowName)!=0){
                 return response()->json([
                     'msg' => 'nok',
@@ -105,6 +108,7 @@ class CategoryController extends Controller
                 $module->slug = $slug;
                 $module->description = $description;
                 $module->content = $content;
+                $module->user_id = $ss['id'];
         
                 $module->save();
 

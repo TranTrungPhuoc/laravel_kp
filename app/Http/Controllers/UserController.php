@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
 
 use App\Models\User;
 
@@ -30,7 +31,8 @@ class UserController extends Controller
                 'main' => $main,
                 'tables' => $tables,
                 'nameModule' => $request->segment(2),
-                'nameVi' => $this->changeNameModule($request->segment(2))
+                'nameVi' => $this->changeNameModule($request->segment(2)),
+                'ssId' => $ss['id']
             ]);
         }
         else{
@@ -46,7 +48,8 @@ class UserController extends Controller
             return view('admin.index', [
                 'main' => $main,
                 'nameModule' => $request->segment(2),
-                'nameVi' => $this->changeNameModule($request->segment(2))
+                'nameVi' => $this->changeNameModule($request->segment(2)),
+                'ssId' => $ss['id']
             ]);
         }
         else{
@@ -63,7 +66,7 @@ class UserController extends Controller
 
             // check email có tồn tại trong db hay
             $rowEmail = DB::table($this->nameTable)->where('email', $email)->get();
-
+            
             if(count($rowEmail)!=0){
                 return response()->json([
                     'msg' => 'nok',
@@ -147,7 +150,8 @@ class UserController extends Controller
                 'main' => $main,
                 'row' => $row[0], // [{}]
                 'nameModule' => $request->segment(2),
-                'nameVi' => $this->changeNameModule($request->segment(2))
+                'nameVi' => $this->changeNameModule($request->segment(2)),
+                'ssId' => $ss['id']
             ]);
         }
         else{
@@ -160,12 +164,18 @@ class UserController extends Controller
     }
 
     function processLogin(Request $request) {
-        $username = $request->input('username');
+        $email = $request->input('email');
         $password = $request->input('password');
 
-        if($username == 'admin' && $password == '123456'){
+        // check email
+        $user = DB::table($this->nameTable)->where('email', $email)->get();
+
+        if (count($user)!=0 && Hash::check($password, $user[0]->password)) {
             // echo 'Đăng nhập thành công!';
-            $request->session()->put('loginSession', 'Hello');
+            $request->session()->put('loginSession', [
+                'id' => $user[0]->id,
+                'email' => $user[0]->email
+            ]);
             // tự chuyển qua bên trang /admin/dashboard
             return redirect('/admin/dashboard');
         }
