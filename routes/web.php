@@ -5,6 +5,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\LayoutController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +17,6 @@ use App\Http\Controllers\PostController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () { return view('welcome'); });
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index']);
 
@@ -52,3 +51,6 @@ Route::post('/processLogin', [UserController::class, 'processLogin']);
 Route::get('/createSession', [UserController::class, 'createSession']);
 Route::get('/getSession', [UserController::class, 'getSession']);
 Route::get('/deleteSession', [UserController::class, 'deleteSession']);
+
+// layout
+Route::get('/{any?}', [LayoutController::class, 'index']);
